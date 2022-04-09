@@ -1,4 +1,4 @@
-import { Amplify } from "aws-amplify";
+import { Amplify, Auth } from "aws-amplify";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
@@ -18,6 +18,8 @@ Amplify.configure({
 function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
+
+  Auth.currentAuthenticatedUser().then(console.log);
 
   if (!isLoadingComplete) {
     return null;
