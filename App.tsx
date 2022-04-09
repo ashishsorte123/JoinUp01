@@ -7,6 +7,7 @@ import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 import config from "./src/aws-exports";
 import { withAuthenticator } from "aws-amplify-react-native";
+import { LogBox } from "react-native";
 
 Amplify.configure({
   ...config,
@@ -16,6 +17,7 @@ Amplify.configure({
 });
 
 function App() {
+  LogBox.ignoreAllLogs();
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
 
