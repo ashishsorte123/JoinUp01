@@ -1,17 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import ChatRoomItem from "../components/ChatRoomItem";
 import chatRoomData from "../assets/dummy-data/ChatRooms";
-import { Auth } from "aws-amplify";
+import { Auth, DataStore } from "aws-amplify";
+import { ChatRoom } from "../src/models";
+import { ChatRoomUser } from "../src/models";
 
 export default function HomeScreen() {
-  const logout = () => {
+  const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
+
+  useEffect(() => {
+    const fetchChatRooms = async () => {
+      const userData = await Auth.currentAuthenticatedUser();
+
+      const chatRooms = (await DataStore.query(ChatRoomUser))
+        .filter(
+          (chatRoomUser) => chatRoomUser.user.id === userData.attributes.sub
+        )
+        .map((chatRoomUser) => chatRoomUser.chatRoom);
+      console.log(chatRooms);
+      setChatRooms(chatRooms);
+    };
+    fetchChatRooms();
+  }, []);
+
+  const logout = async () => {
+    // await DataStore.clear();
     Auth.signOut();
   };
+
   return (
     <View style={styles.page}>
       <FlatList
-        data={chatRoomData}
+        data={chatRooms}
         renderItem={({ item }) => <ChatRoomItem chatRoom={item} />}
         showsVerticalScrollIndicator={false}
       />
