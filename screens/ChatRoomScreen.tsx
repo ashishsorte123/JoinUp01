@@ -9,7 +9,7 @@ export default function ChatRoomScreen() {
   const route = useRoute();
   const navigation = useNavigation();
 
-  console.warn("Displaying chat room: ", route.params?.id);
+  // console.warn("Displaying chat room: ", route.params?.id);
 
   navigation.setOptions({ title: "Jeff Bezos" });
   return (
