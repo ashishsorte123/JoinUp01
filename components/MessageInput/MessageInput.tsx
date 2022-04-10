@@ -11,9 +11,11 @@ import {
 import { Auth, DataStore } from "aws-amplify";
 import { Message } from "../../src/models";
 import { ChatRoom } from "../../src/models";
+import EmojiSelector from "react-native-emoji-selector";
 
 const MessageInput = ({ chatRoom }) => {
   const [message, setMessage] = useState("");
+  const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
 
   const sendMessage = async () => {
     //send message
@@ -27,6 +29,7 @@ const MessageInput = ({ chatRoom }) => {
     );
     updateLastMessage(newMessage);
     setMessage("");
+    setIsEmojiPickerOpen(false);
   };
 
   const updateLastMessage = async (newMessage) => {
@@ -50,38 +53,60 @@ const MessageInput = ({ chatRoom }) => {
   };
 
   return (
-    <View style={styles.root}>
-      <View style={styles.inputContainer}>
-        <SimpleLineIcons
-          name="emotsmile"
-          size={24}
-          color="#595959"
-          style={styles.icon}
-        />
+    <View style={[styles.root, { height: isEmojiPickerOpen ? "50%" : "auto" }]}>
+      <View style={styles.row}>
+        <View style={styles.inputContainer}>
+          <Pressable
+            onPress={() =>
+              setIsEmojiPickerOpen((currentvalue) => !currentvalue)
+            }
+          >
+            <SimpleLineIcons
+              name="emotsmile"
+              size={24}
+              color="#595959"
+              style={styles.icon}
+            />
+          </Pressable>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Message..."
-          value={message}
-          onChangeText={setMessage}
-        />
+          <TextInput
+            style={styles.input}
+            placeholder="Message..."
+            value={message}
+            onChangeText={setMessage}
+          />
 
-        <Feather name="camera" size={24} color="#595959" style={styles.icon} />
+          <Feather
+            name="camera"
+            size={24}
+            color="#595959"
+            style={styles.icon}
+          />
 
-        <MaterialCommunityIcons
-          name="microphone-outline"
-          size={24}
-          color="#595959"
-          style={styles.icon}
-        />
+          <MaterialCommunityIcons
+            name="microphone-outline"
+            size={24}
+            color="#595959"
+            style={styles.icon}
+          />
+        </View>
+        <Pressable onPress={onPress} style={styles.buttonContainer}>
+          {message ? (
+            <Ionicons name="send" size={18} color="white" />
+          ) : (
+            <AntDesign name="plus" size={24} color="white" />
+          )}
+        </Pressable>
       </View>
-      <Pressable onPress={onPress} style={styles.buttonContainer}>
-        {message ? (
-          <Ionicons name="send" size={18} color="white" />
-        ) : (
-          <AntDesign name="plus" size={24} color="white" />
-        )}
-      </Pressable>
+
+      {isEmojiPickerOpen && (
+        <EmojiSelector
+          onEmojiSelected={(emoji) =>
+            setMessage((currentMessage) => currentMessage + emoji)
+          }
+          columns={9}
+        />
+      )}
     </View>
   );
 };

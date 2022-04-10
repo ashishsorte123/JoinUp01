@@ -2,7 +2,6 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   root: {
-    flexDirection: "row",
     padding: 10,
   },
 
@@ -40,6 +39,10 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: 35,
+  },
+
+  row: {
+    flexDirection: "row",
   },
 });
 
