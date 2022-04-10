@@ -6,13 +6,11 @@ import {
   ActivityIndicator,
 } from "react-native";
 import Message from "../components/Message";
-import chatRoomData from "../assets/dummy-data/Chats";
 import MessageInput from "../components/MessageInput";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Message as MessageModal } from "../src/models";
 import { DataStore, SortDirection } from "aws-amplify";
 import { ChatRoom } from "../src/models";
-import { CONTROL_MSG } from "@aws-amplify/pubsub";
 
 export default function ChatRoomScreen() {
   const [messages, setMessages] = useState<MessageModal[]>([]);
@@ -54,8 +52,6 @@ export default function ChatRoomScreen() {
       setChatRoom(chatRoom);
     }
   };
-
-  navigation.setOptions({ title: "Jeff Bezos" });
 
   const fetchMessages = async () => {
     if (!chatRoom) {
