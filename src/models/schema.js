@@ -14,7 +14,7 @@ export const schema = {
                     "name": "content",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "userID": {
@@ -29,6 +29,20 @@ export const schema = {
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
+                    "attributes": []
+                },
+                "image": {
+                    "name": "image",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "audio": {
+                    "name": "audio",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
                     "attributes": []
                 },
                 "createdAt": {
@@ -365,5 +379,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "6d127f782261ee4264602995399ba02c"
+    "version": "5c74cbb606f4a1c4817f5f85a24f79b5"
 };
