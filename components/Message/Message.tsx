@@ -7,21 +7,25 @@ import {
 import React, { useEffect, useState } from "react";
 import styles from "./styles";
 import { User } from "../../src/models";
-import { Auth, DataStore } from "aws-amplify";
+import { Auth, DataStore, Storage } from "aws-amplify";
 import { S3Image } from "aws-amplify-react-native";
-
-const blue = "#3777f0";
-const grey = "lightgrey";
-const myID = "u1";
+import AudioPlayer from "../AudioPlayer";
 
 const Message = ({ message }) => {
   const [user, setUser] = useState<User | undefined>();
   const [isMe, setIsMe] = useState<boolean>(false);
+  const [soundURI, setSoundURI] = useState<any>(null);
   const { width } = useWindowDimensions();
 
   useEffect(() => {
     DataStore.query(User, message.userID).then(setUser);
   }, []);
+
+  useEffect(() => {
+    if (message.audio) {
+      Storage.get(message.audio).then(setSoundURI);
+    }
+  }, [message]);
 
   useEffect(() => {
     const checkIfMe = async () => {
@@ -43,6 +47,7 @@ const Message = ({ message }) => {
       style={[
         styles.container,
         isMe ? styles.rightContainer : styles.leftContainer,
+        { width: soundURI ? "75%" : "auto" },
       ]}
     >
       {message.image && (
@@ -54,6 +59,9 @@ const Message = ({ message }) => {
           />
         </View>
       )}
+
+      {soundURI && <AudioPlayer soundURI={soundURI} />}
+
       {!!message.content && (
         <Text style={{ color: isMe ? "black" : "white" }}>
           {message.content}

@@ -47,12 +47,12 @@ const styles = StyleSheet.create({
 
   sendImageContainer: {
     flexDirection: "row",
-    marginVertical: 10,
+    marginVertical: 20,
     alignSelf: "stretch",
     justifyContent: "space-between",
     borderWidth: 1,
     borderColor: "lightgrey",
-    borderRadius: 10,
+    borderRadius: 20,
   },
 });
 
