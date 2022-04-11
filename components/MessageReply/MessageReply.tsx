@@ -3,23 +3,22 @@ import {
   Text,
   ActivityIndicator,
   useWindowDimensions,
-  Pressable,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import styles from "./styles";
-import { User } from "../../src/models";
+import { Message as MessageModal, User } from "../../src/models";
 import { Auth, DataStore, Storage } from "aws-amplify";
 import { S3Image } from "aws-amplify-react-native";
 import AudioPlayer from "../AudioPlayer";
 import { Ionicons } from "@expo/vector-icons";
-import { Message as MessageModal } from "../../src/models";
 
 const MessageReply = (props) => {
   const { message: propMessage } = props;
   const [message, setMessage] = useState<MessageModal>(propMessage);
   const [user, setUser] = useState<User | undefined>();
-  const [isMe, setIsMe] = useState<boolean | null>(null);
+  const [isMe, setIsMe] = useState<boolean | null>(false);
   const [soundURI, setSoundURI] = useState<any>(null);
+
   const { width } = useWindowDimensions();
 
   useEffect(() => {
@@ -29,6 +28,12 @@ const MessageReply = (props) => {
   useEffect(() => {
     setMessage(propMessage);
   }, [propMessage]);
+
+  useEffect(() => {
+    if (message.audio) {
+      Storage.get(message.audio).then(setSoundURI);
+    }
+  }, [message]);
 
   useEffect(() => {
     const checkIfMe = async () => {
@@ -58,7 +63,7 @@ const MessageReply = (props) => {
           <View style={{ marginBottom: message.content ? 10 : 0 }}>
             <S3Image
               imgKey={message.image}
-              style={{ width: width * 0.65, aspectRatio: 4 / 3 }}
+              style={{ width: width * 0.55, aspectRatio: 4 / 3 }}
               resizeMode="contain"
             />
           </View>
