@@ -35,7 +35,7 @@ export default function ChatRoomScreen() {
       if (msg.model === MessageModal && msg.opType === "INSERT") {
         setMessages((existingMessage) => [msg.element, ...existingMessage]);
       }
-    },);
+    });
 
     return () => subscription.unsubscribe();
   }, []);
@@ -64,7 +64,7 @@ export default function ChatRoomScreen() {
         sort: (message) => message.createdAt(SortDirection.DESCENDING),
       }
     );
-    console.log(fetchedMessages);
+    // console.log(fetchedMessages);
     setMessages(fetchedMessages);
   };
 
