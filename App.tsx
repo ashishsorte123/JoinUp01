@@ -1,7 +1,6 @@
 import { Amplify, Auth, DataStore, Hub } from "aws-amplify";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
@@ -10,7 +9,7 @@ import { withAuthenticator } from "aws-amplify-react-native";
 import { LogBox } from "react-native";
 import { useEffect, useState } from "react";
 import { Message, User } from "./src/models";
-import moment from "moment";
+import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 
 Amplify.configure({
   ...config,
@@ -111,7 +110,10 @@ function App() {
   } else {
     return (
       <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
+        <ActionSheetProvider>
+          <Navigation colorScheme={colorScheme} />
+        </ActionSheetProvider>
+
         <StatusBar />
       </SafeAreaProvider>
     );

@@ -8,9 +8,10 @@ import { ChatRoomUser } from "../../src/models";
 import moment from "moment";
 
 export default function ChatRoomItem({ chatRoom }) {
-  const [users, setUsers] = useState<User[]>([]); // all users in this chatroom
+  // const [users, setUsers] = useState<User[]>([]); // all users in this chatroom
   const [user, setUser] = useState<User | null>(null); // the display user
   const [lastMessage, setLastMessage] = useState<Message | undefined>();
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigation = useNavigation();
 
@@ -26,7 +27,7 @@ export default function ChatRoomItem({ chatRoom }) {
       setUser(
         fetchedUsers.find((user) => user.id !== authUser.attributes.sub) || null
       );
-      // console.log(fetchedUsers);
+      setIsLoading(false);
     };
     fetchUsers();
   }, []);
@@ -45,7 +46,7 @@ export default function ChatRoomItem({ chatRoom }) {
     navigation.navigate("ChatRoom", { id: chatRoom.id });
   };
 
-  if (!user) {
+  if (isLoading) {
     return <ActivityIndicator />;
   }
 
