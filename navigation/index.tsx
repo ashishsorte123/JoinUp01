@@ -32,6 +32,7 @@ import HomeHeader from "./HomeHeader";
 import ChatRoomHeader from "./ChatRoomHeader";
 import UsersScreen from "../screens/UsersScreen";
 import GroupInfoScreen from "../screens/GroupInfoScreen";
+import SettingsScreen from "../screens/SettingsScreen";
 
 export default function Navigation({
   colorScheme,
@@ -74,6 +75,11 @@ function RootNavigator() {
         name="UsersScreen"
         component={UsersScreen}
         options={{ title: "Users" }}
+      />
+      <Stack.Screen
+        name="Settings"
+        component={SettingsScreen}
+        // options={{ title: "Oops!" }}
       />
       <Stack.Screen
         name="NotFound"

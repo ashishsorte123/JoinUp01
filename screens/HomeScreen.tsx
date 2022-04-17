@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import ChatRoomItem from "../components/ChatRoomItem";
-import chatRoomData from "../assets/dummy-data/ChatRooms";
 import { Auth, DataStore } from "aws-amplify";
 import { ChatRoom } from "../src/models";
 import { ChatRoomUser } from "../src/models";
@@ -18,16 +17,11 @@ export default function HomeScreen() {
           (chatRoomUser) => chatRoomUser.user.id === userData.attributes.sub
         )
         .map((chatRoomUser) => chatRoomUser.chatRoom);
-      // console.log(chatRooms);
+
       setChatRooms(chatRooms);
     };
     fetchChatRooms();
   }, []);
-
-  const logout = async () => {
-    // await DataStore.clear();
-    Auth.signOut();
-  };
 
   return (
     <View style={styles.page}>
@@ -36,20 +30,6 @@ export default function HomeScreen() {
         renderItem={({ item }) => <ChatRoomItem chatRoom={item} />}
         showsVerticalScrollIndicator={false}
       />
-
-      <Pressable
-        onPress={logout}
-        style={{
-          backgroundColor: "#3777f0",
-          height: 50,
-          margin: 10,
-          borderRadius: 25,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Text style={{ color: "white" }}>Logout</Text>
-      </Pressable>
     </View>
   );
 }
