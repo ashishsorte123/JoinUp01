@@ -111,7 +111,7 @@ function App() {
     return (
       <SafeAreaProvider>
         <ActionSheetProvider>
-          <Navigation colorScheme={colorScheme} />
+          <Navigation colorScheme="light" />
         </ActionSheetProvider>
 
         <StatusBar />

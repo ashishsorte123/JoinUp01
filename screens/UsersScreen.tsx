@@ -38,7 +38,7 @@ export default function UsersScreen() {
     const newChatRoomData = { newMessages: 0, Admin: dbUser };
 
     if (users.length > 1) {
-      newChatRoomData.name = "New Group 1";
+      newChatRoomData.name = "Friends";
       newChatRoomData.imageUri =
         "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/group.jpeg";
     }
